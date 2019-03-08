@@ -9,11 +9,11 @@
 #define DELTA 5.0f
 #define FORCE_CONST 1000000
 
-//Программа визуализации силовых линий зарядов
-//Кликая ПКМ - создаешь положительный заряд в данной точке
-//Кликая СКМ - создаешь отрицательный заряд в данной точке
-//Кликая ЛКМ - создаешь силовую линию, проходящую через данную точку
-//Таким образом можно создать картину конфигурации силовых линий для определенного набора зарядов.
+
+//РќР°Р¶РёРјР°СЏ РїСЂР°РІСѓСЋ РєРЅРѕРїРєСѓ РјС‹С€Рё - СЃРѕР·РґР°РµС€СЊ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹Р№ Р·Р°СЂСЏРґ
+//РЎСЂРµРґРЅСЋСЋ - РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Р№
+//Р›РљРњ - РЅР°СЂРёСЃРѕРІР°С‚СЊ Р»РёРЅРёСЋ РґР»СЏ СЃРѕР·РґР°РЅРЅРѕР№ РєРѕРЅС„РёРіСѓСЂР°С†РёРё Р·Р°СЂСЏРґРѕРІ
+
 
 void CreateChargePositive(sf::RenderWindow& window, std::vector<sf::Vertex>& centres, std::vector<sf::CircleShape>& charges_array);
 void CreateChargeNegative(sf::RenderWindow& window, std::vector<sf::Vertex>& centres, std::vector<sf::CircleShape>& charges_array);
@@ -45,11 +45,11 @@ int main()
 				window.close();
 				break;
 			case sf::Event::MouseButtonPressed:
-				if (event.mouseButton.button == sf::Mouse::Right) //Здесь создается заряд и созраняется в массиве
+				if (event.mouseButton.button == sf::Mouse::Right) 
 				{
 					CreateChargePositive(window, centres_positive, charges_positive_array);
 				}	
-				else if (event.mouseButton.button == sf::Mouse::Left) //Здесь в массив заносятся точки, через которые будет проведена линия
+				else if (event.mouseButton.button == sf::Mouse::Left) 
 				{
 					CreateForceLine(window, dots_forward, dots_back, centres_positive, centres_negative);
 				}
@@ -70,8 +70,8 @@ int main()
 		{
 			window.draw(it);
 		}
-		DrawForwardLine(window, dots_forward); //Рисует первую часть точек - "на бесконечность" от точки клика
-		DrawBackwardLine(window, dots_back); //Рисует вторую часть точек - к заряду от точки клика
+		DrawForwardLine(window, dots_forward); //ГђГЁГ±ГіГҐГІ ГЇГҐГ°ГўГіГѕ Г·Г Г±ГІГј ГІГ®Г·ГҐГЄ - "Г­Г  ГЎГҐГ±ГЄГ®Г­ГҐГ·Г­Г®Г±ГІГј" Г®ГІ ГІГ®Г·ГЄГЁ ГЄГ«ГЁГЄГ 
+		DrawBackwardLine(window, dots_back); //ГђГЁГ±ГіГҐГІ ГўГІГ®Г°ГіГѕ Г·Г Г±ГІГј ГІГ®Г·ГҐГЄ - ГЄ Г§Г Г°ГїГ¤Гі Г®ГІ ГІГ®Г·ГЄГЁ ГЄГ«ГЁГЄГ 
 		window.display();
 	}
 	return 0;
@@ -83,26 +83,26 @@ void CreateChargePositive(sf::RenderWindow& window, std::vector<sf::Vertex>& cen
 {
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
 	sf::CircleShape circle(RADIUS);
-	circle.setPosition(mousePosition.x - RADIUS, mousePosition.y - RADIUS);  //Помещаем заряд в точку клика
+	circle.setPosition(mousePosition.x - RADIUS, mousePosition.y - RADIUS);  //ГЏГ®Г¬ГҐГ№Г ГҐГ¬ Г§Г Г°ГїГ¤ Гў ГІГ®Г·ГЄГі ГЄГ«ГЁГЄГ 
 	sf::Vertex centre;
 	centre.position.x = mousePosition.x;
 	centre.position.y = mousePosition.y;
-	centres.push_back(centre);   //Заносим центр заряда в массив - для рассчетов
+	centres.push_back(centre);   //Г‡Г Г­Г®Г±ГЁГ¬ Г¶ГҐГ­ГІГ° Г§Г Г°ГїГ¤Г  Гў Г¬Г Г±Г±ГЁГў - Г¤Г«Гї Г°Г Г±Г±Г·ГҐГІГ®Гў
 	circle.setFillColor(sf::Color::Red);
-	charges_array.push_back(circle); //Заносим заряд в массив для зарисовки
+	charges_array.push_back(circle); //Г‡Г Г­Г®Г±ГЁГ¬ Г§Г Г°ГїГ¤ Гў Г¬Г Г±Г±ГЁГў Г¤Г«Гї Г§Г Г°ГЁГ±Г®ГўГЄГЁ
 }
 
 void CreateChargeNegative(sf::RenderWindow& window, std::vector<sf::Vertex>& centres, std::vector<sf::CircleShape>& charges_array)
 {
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
 	sf::CircleShape circle(RADIUS);
-	circle.setPosition(mousePosition.x - RADIUS, mousePosition.y - RADIUS);  //Помещаем заряд в точку клика
+	circle.setPosition(mousePosition.x - RADIUS, mousePosition.y - RADIUS);  //ГЏГ®Г¬ГҐГ№Г ГҐГ¬ Г§Г Г°ГїГ¤ Гў ГІГ®Г·ГЄГі ГЄГ«ГЁГЄГ 
 	sf::Vertex centre;
 	centre.position.x = mousePosition.x;
 	centre.position.y = mousePosition.y;
-	centres.push_back(centre);   //Заносим центр заряда в массив - для рассчетов
+	centres.push_back(centre);   //Г‡Г Г­Г®Г±ГЁГ¬ Г¶ГҐГ­ГІГ° Г§Г Г°ГїГ¤Г  Гў Г¬Г Г±Г±ГЁГў - Г¤Г«Гї Г°Г Г±Г±Г·ГҐГІГ®Гў
 	circle.setFillColor(sf::Color::Blue);
-	charges_array.push_back(circle); //Заносим заряд в массив для зарисовки
+	charges_array.push_back(circle); //Г‡Г Г­Г®Г±ГЁГ¬ Г§Г Г°ГїГ¤ Гў Г¬Г Г±Г±ГЁГў Г¤Г«Гї Г§Г Г°ГЁГ±Г®ГўГЄГЁ
 }
 
 void CreateForceLine(sf::RenderWindow& window, std::vector<sf::Vertex>& dots_forward, std::vector<sf::Vertex>& dots_back, std::vector<sf::Vertex>& centres_positive, std::vector<sf::Vertex>& centres_negative)
@@ -117,28 +117,28 @@ void CreateForceLine(sf::RenderWindow& window, std::vector<sf::Vertex>& dots_for
 
 	next.position.x = 0;   
 	next.position.y = 0;
-	dots_forward.push_back(next);  //Заносим "пустую" точку, чтобы в массиве отделять одну силовую линию от другой
+	dots_forward.push_back(next);  //Г‡Г Г­Г®Г±ГЁГ¬ "ГЇГіГ±ГІГіГѕ" ГІГ®Г·ГЄГі, Г·ГІГ®ГЎГ» Гў Г¬Г Г±Г±ГЁГўГҐ Г®ГІГ¤ГҐГ«ГїГІГј Г®Г¤Г­Гі Г±ГЁГ«Г®ГўГіГѕ Г«ГЁГ­ГЁГѕ Г®ГІ Г¤Г°ГіГЈГ®Г©
 	dot_position = sf::Mouse::getPosition(window);
-	click.position.x = dot_position.x;   //Созраняем местоположение точки клика
+	click.position.x = dot_position.x;   //Г‘Г®Г§Г°Г Г­ГїГҐГ¬ Г¬ГҐГ±ГІГ®ГЇГ®Г«Г®Г¦ГҐГ­ГЁГҐ ГІГ®Г·ГЄГЁ ГЄГ«ГЁГЄГ 
 	click.position.y = dot_position.y;
 
-	dot.position.x = dot_position.x;   //Первая рабочая точка - точка клика
+	dot.position.x = dot_position.x;   //ГЏГҐГ°ГўГ Гї Г°Г ГЎГ®Г·Г Гї ГІГ®Г·ГЄГ  - ГІГ®Г·ГЄГ  ГЄГ«ГЁГЄГ 
 	dot.position.y = dot_position.y;
 	dots_forward.push_back(click);
 	
-	//Следующее условие  необходимо для того, чтобы линия создавалась только до края окна
+	//Г‘Г«ГҐГ¤ГіГѕГ№ГҐГҐ ГіГ±Г«Г®ГўГЁГҐ  Г­ГҐГ®ГЎГµГ®Г¤ГЁГ¬Г® Г¤Г«Гї ГІГ®ГЈГ®, Г·ГІГ®ГЎГ» Г«ГЁГ­ГЁГї Г±Г®Г§Г¤Г ГўГ Г«Г Г±Гј ГІГ®Г«ГјГЄГ® Г¤Г® ГЄГ°Г Гї Г®ГЄГ­Г 
 	while ((dot.position.x > 0) && (dot.position.x < SCREEN_WIDTH) && (dot.position.y > 0) && (dot.position.y < SCREEN_HEIGHT) && (flag == 0))
 	{
 		CalculateForce(force, centres_positive, centres_negative, dot);
-		next.position.x = dot.position.x + force.x * DELTA;  // Смещаемся от текущей точке чуть дальше вдоль силовых линий
+		next.position.x = dot.position.x + force.x * DELTA;  // Г‘Г¬ГҐГ№Г ГҐГ¬Г±Гї Г®ГІ ГІГҐГЄГіГ№ГҐГ© ГІГ®Г·ГЄГҐ Г·ГіГІГј Г¤Г Г«ГјГёГҐ ГўГ¤Г®Г«Гј Г±ГЁГ«Г®ГўГ»Гµ Г«ГЁГ­ГЁГ©
 		next.position.y = dot.position.y + force.y * DELTA;
-		dots_forward.push_back(next);   //Заносим текущую точку в массив
-		dot.position.x = next.position.x;   //Сменяем рабочую точку на следующую по порядку
+		dots_forward.push_back(next);   //Г‡Г Г­Г®Г±ГЁГ¬ ГІГҐГЄГіГ№ГіГѕ ГІГ®Г·ГЄГі Гў Г¬Г Г±Г±ГЁГў
+		dot.position.x = next.position.x;   //Г‘Г¬ГҐГ­ГїГҐГ¬ Г°Г ГЎГ®Г·ГіГѕ ГІГ®Г·ГЄГі Г­Г  Г±Г«ГҐГ¤ГіГѕГ№ГіГѕ ГЇГ® ГЇГ®Г°ГїГ¤ГЄГі
 		dot.position.y = next.position.y;
 
 		for (i = 0; i < centres_positive.size(); i++)
 		{
-			//Следующее условие - проверка на нахождение в кружке заряда
+			//Г‘Г«ГҐГ¤ГіГѕГ№ГҐГҐ ГіГ±Г«Г®ГўГЁГҐ - ГЇГ°Г®ГўГҐГ°ГЄГ  Г­Г  Г­Г ГµГ®Г¦Г¤ГҐГ­ГЁГҐ Гў ГЄГ°ГіГ¦ГЄГҐ Г§Г Г°ГїГ¤Г 
 			if (abs(next.position.x - centres_positive[i].position.x) < RADIUS && abs(next.position.y - centres_positive[i].position.y) < RADIUS)
 			{
 				flag = 1;
@@ -147,7 +147,7 @@ void CreateForceLine(sf::RenderWindow& window, std::vector<sf::Vertex>& dots_for
 		}
 		for (i = 0; i < centres_negative.size(); i++)
 		{
-			//Следующее условие - проверка на нахождение в кружке заряда
+			//Г‘Г«ГҐГ¤ГіГѕГ№ГҐГҐ ГіГ±Г«Г®ГўГЁГҐ - ГЇГ°Г®ГўГҐГ°ГЄГ  Г­Г  Г­Г ГµГ®Г¦Г¤ГҐГ­ГЁГҐ Гў ГЄГ°ГіГ¦ГЄГҐ Г§Г Г°ГїГ¤Г 
 			if (abs(next.position.x - centres_negative[i].position.x) < RADIUS && abs(next.position.y - centres_negative[i].position.y) < RADIUS)
 			{
 				flag = 1;
@@ -157,25 +157,25 @@ void CreateForceLine(sf::RenderWindow& window, std::vector<sf::Vertex>& dots_for
 	}
 
 	flag = 0;
-	next.position.x = 0;     //Здесь начинается создание точек "к заряду"
+	next.position.x = 0;     //Г‡Г¤ГҐГ±Гј Г­Г Г·ГЁГ­Г ГҐГІГ±Гї Г±Г®Г§Г¤Г Г­ГЁГҐ ГІГ®Г·ГҐГЄ "ГЄ Г§Г Г°ГїГ¤Гі"
 	next.position.y = 0;
 	dots_back.push_back(next);
 	dot.position.x = click.position.x;
 	dot.position.y = click.position.y;
 	dots_back.push_back(click);
 
-	while ((dot.position.x > 0) && (dot.position.x < SCREEN_WIDTH) && (dot.position.y > 0) && (dot.position.y < SCREEN_HEIGHT) && flag == 0)  //флаг поднимается, когда линия заходит в кружок заряда
+	while ((dot.position.x > 0) && (dot.position.x < SCREEN_WIDTH) && (dot.position.y > 0) && (dot.position.y < SCREEN_HEIGHT) && flag == 0)  //ГґГ«Г ГЈ ГЇГ®Г¤Г­ГЁГ¬Г ГҐГІГ±Гї, ГЄГ®ГЈГ¤Г  Г«ГЁГ­ГЁГї Г§Г ГµГ®Г¤ГЁГІ Гў ГЄГ°ГіГ¦Г®ГЄ Г§Г Г°ГїГ¤Г 
 	{
 		CalculateForce(force, centres_positive, centres_negative, dot);
-		next.position.x = dot.position.x - force.x * DELTA;  // Смещаемся от текущей точке чуть дальше вдоль силовых линий
+		next.position.x = dot.position.x - force.x * DELTA;  // Г‘Г¬ГҐГ№Г ГҐГ¬Г±Гї Г®ГІ ГІГҐГЄГіГ№ГҐГ© ГІГ®Г·ГЄГҐ Г·ГіГІГј Г¤Г Г«ГјГёГҐ ГўГ¤Г®Г«Гј Г±ГЁГ«Г®ГўГ»Гµ Г«ГЁГ­ГЁГ©
 		next.position.y = dot.position.y - force.y * DELTA;
-		dots_back.push_back(next);   //Заносим текущую точку в массив
-		dot.position.x = next.position.x;   //Сменяем рабочую точку на следующую по порядку
+		dots_back.push_back(next);   //Г‡Г Г­Г®Г±ГЁГ¬ ГІГҐГЄГіГ№ГіГѕ ГІГ®Г·ГЄГі Гў Г¬Г Г±Г±ГЁГў
+		dot.position.x = next.position.x;   //Г‘Г¬ГҐГ­ГїГҐГ¬ Г°Г ГЎГ®Г·ГіГѕ ГІГ®Г·ГЄГі Г­Г  Г±Г«ГҐГ¤ГіГѕГ№ГіГѕ ГЇГ® ГЇГ®Г°ГїГ¤ГЄГі
 		dot.position.y = next.position.y;
 
 		for (i = 0; i < centres_positive.size(); i++)
 		{
-			//Следующее условие - проверка на нахождение в кружке заряда
+			//Г‘Г«ГҐГ¤ГіГѕГ№ГҐГҐ ГіГ±Г«Г®ГўГЁГҐ - ГЇГ°Г®ГўГҐГ°ГЄГ  Г­Г  Г­Г ГµГ®Г¦Г¤ГҐГ­ГЁГҐ Гў ГЄГ°ГіГ¦ГЄГҐ Г§Г Г°ГїГ¤Г 
 			if (abs(next.position.x - centres_positive[i].position.x) < RADIUS && abs(next.position.y - centres_positive[i].position.y) < RADIUS)
 			{
 				flag = 1;
@@ -184,7 +184,7 @@ void CreateForceLine(sf::RenderWindow& window, std::vector<sf::Vertex>& dots_for
 		}
 		for (i = 0; i < centres_negative.size(); i++)
 		{
-			//Следующее условие - проверка на нахождение в кружке заряда
+			//Г‘Г«ГҐГ¤ГіГѕГ№ГҐГҐ ГіГ±Г«Г®ГўГЁГҐ - ГЇГ°Г®ГўГҐГ°ГЄГ  Г­Г  Г­Г ГµГ®Г¦Г¤ГҐГ­ГЁГҐ Гў ГЄГ°ГіГ¦ГЄГҐ Г§Г Г°ГїГ¤Г 
 			if (abs(next.position.x - centres_negative[i].position.x) < RADIUS && abs(next.position.y - centres_negative[i].position.y) < RADIUS)
 			{
 				flag = 1;
@@ -199,23 +199,23 @@ void CalculateForce(sf::Vector2f& force, std::vector<sf::Vertex>& centres_positi
 	float len;
 	force.x = 0;
 	force.y = 0;
-	for (auto it : centres_positive) //Бежим по массиву зарядов, суммируя их вклады в поле
+	for (auto it : centres_positive) //ГЃГҐГ¦ГЁГ¬ ГЇГ® Г¬Г Г±Г±ГЁГўГі Г§Г Г°ГїГ¤Г®Гў, Г±ГіГ¬Г¬ГЁГ°ГіГї ГЁГµ ГўГЄГ«Г Г¤Г» Гў ГЇГ®Г«ГҐ
 	{
 		len = sqrt(pow((dot.position.x - it.position.x), 2) + pow((dot.position.y - it.position.y), 2));
-		//Добавляем к силе компоненты векторов силовых полей (E = C/(r^2))
+		//Г„Г®ГЎГ ГўГ«ГїГҐГ¬ ГЄ Г±ГЁГ«ГҐ ГЄГ®Г¬ГЇГ®Г­ГҐГ­ГІГ» ГўГҐГЄГІГ®Г°Г®Гў Г±ГЁГ«Г®ГўГ»Гµ ГЇГ®Г«ГҐГ© (E = C/(r^2))
 		force.x += FORCE_CONST * (dot.position.x - it.position.x) / (len * len);
 		force.y += FORCE_CONST * (dot.position.y - it.position.y) / (len * len);
 
 	}
-	for (auto it : centres_negative) //Бежим по массиву зарядов, суммируя их вклады в поле
+	for (auto it : centres_negative) //ГЃГҐГ¦ГЁГ¬ ГЇГ® Г¬Г Г±Г±ГЁГўГі Г§Г Г°ГїГ¤Г®Гў, Г±ГіГ¬Г¬ГЁГ°ГіГї ГЁГµ ГўГЄГ«Г Г¤Г» Гў ГЇГ®Г«ГҐ
 	{
 		len = sqrt(pow((dot.position.x - it.position.x), 2) + pow((dot.position.y - it.position.y), 2));
-		//Добавляем к силе компоненты векторов силовых полей (E = C/(r^2))
+		//Г„Г®ГЎГ ГўГ«ГїГҐГ¬ ГЄ Г±ГЁГ«ГҐ ГЄГ®Г¬ГЇГ®Г­ГҐГ­ГІГ» ГўГҐГЄГІГ®Г°Г®Гў Г±ГЁГ«Г®ГўГ»Гµ ГЇГ®Г«ГҐГ© (E = C/(r^2))
 		force.x -= FORCE_CONST * (dot.position.x - it.position.x) / (len * len);
 		force.y -= FORCE_CONST * (dot.position.y - it.position.y) / (len * len);
 
 	}
-	len = sqrt(pow(force.x, 2) + pow(force.y, 2));  //Нормируем силу, т.к. хотим, чтобы смещение от точки к точке не зависело от ее величины
+	len = sqrt(pow(force.x, 2) + pow(force.y, 2));  //ГЌГ®Г°Г¬ГЁГ°ГіГҐГ¬ Г±ГЁГ«Гі, ГІ.ГЄ. ГµГ®ГІГЁГ¬, Г·ГІГ®ГЎГ» Г±Г¬ГҐГ№ГҐГ­ГЁГҐ Г®ГІ ГІГ®Г·ГЄГЁ ГЄ ГІГ®Г·ГЄГҐ Г­ГҐ Г§Г ГўГЁГ±ГҐГ«Г® Г®ГІ ГҐГҐ ГўГҐГ«ГЁГ·ГЁГ­Г»
 	force.x /= len;
 	force.y /= len;
 }
@@ -229,7 +229,7 @@ void DrawForwardLine(sf::RenderWindow& window, std::vector<sf::Vertex>& dots_for
 	{
 		for (i = 0; i < dots_forward.size() - 1; i++)
 		{
-			//Следующее условие необходимо, чтобы не соединялись между собой точки разных силовых линий
+			//Г‘Г«ГҐГ¤ГіГѕГ№ГҐГҐ ГіГ±Г«Г®ГўГЁГҐ Г­ГҐГ®ГЎГµГ®Г¤ГЁГ¬Г®, Г·ГІГ®ГЎГ» Г­ГҐ Г±Г®ГҐГ¤ГЁГ­ГїГ«ГЁГ±Гј Г¬ГҐГ¦Г¤Гі Г±Г®ГЎГ®Г© ГІГ®Г·ГЄГЁ Г°Г Г§Г­Г»Гµ Г±ГЁГ«Г®ГўГ»Гµ Г«ГЁГ­ГЁГ©
 			if ((dots_forward[i].position.x > 0 && dots_forward[i + 1].position.x > 0) && (dots_forward[i].position.y > 0 && dots_forward[i + 1].position.y > 0) &&
 				(dots_forward[i].position.x < SCREEN_WIDTH && dots_forward[i + 1].position.x < SCREEN_WIDTH) && (dots_forward[i].position.y < SCREEN_HEIGHT && dots_forward[i + 1].position.y < SCREEN_HEIGHT))
 			{
@@ -252,7 +252,7 @@ void DrawBackwardLine(sf::RenderWindow& window, std::vector<sf::Vertex>& dots_ba
 	{
 		for (i = 0; i < dots_back.size() - 1; i++)
 		{
-			//Следующее условие необходимо, чтобы не соединялись между собой точки разных силовых линий
+			//Г‘Г«ГҐГ¤ГіГѕГ№ГҐГҐ ГіГ±Г«Г®ГўГЁГҐ Г­ГҐГ®ГЎГµГ®Г¤ГЁГ¬Г®, Г·ГІГ®ГЎГ» Г­ГҐ Г±Г®ГҐГ¤ГЁГ­ГїГ«ГЁГ±Гј Г¬ГҐГ¦Г¤Гі Г±Г®ГЎГ®Г© ГІГ®Г·ГЄГЁ Г°Г Г§Г­Г»Гµ Г±ГЁГ«Г®ГўГ»Гµ Г«ГЁГ­ГЁГ©
 			if (dots_back[i].position.x != 0 && dots_back[i + 1].position.x != 0)
 			{
 				sf::Vertex line[] =
